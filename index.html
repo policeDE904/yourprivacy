@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Авторизація користувача</title>
+  <style>
+    body { font-family: Arial; max-width: 400px; margin: 40px auto; }
+    input, button { width: 100%; padding: 10px; margin: 5px 0; }
+    button { background: #007bff; color: white; border: none; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    h2 { text-align: center; }
+    #msg { text-align: center; margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Реєстрація</h2>
+  <input id="name" placeholder="Ім’я">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Пароль">
+  <button onclick="register()">Зареєструватися</button>
+
+  <h2>Вхід</h2>
+  <input id="lemail" placeholder="Email">
+  <input id="lpassword" type="password" placeholder="Пароль">
+  <button onclick="login()">Увійти</button>
+
+  <p id="msg"></p>
+
+  <script>
+    // Заміни URL після деплою на Railway
+    const API = "https://your-railway-app-url.up.railway.app";
+
+    async function register() {
+      const res = await fetch(API + "/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: name.value,
+          email: email.value,
+          password: password.value
+        })
+      });
+      msg.innerText = await res.text();
+    }
+
+    async function login() {
+      const res = await fetch(API + "/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          email: lemail.value,
+          password: lpassword.value
+        })
+      });
+      msg.innerText = await res.text();
+    }
+  </script>
+</body>
+</html>
